@@ -6,7 +6,7 @@
  矿池与矿机的通信方式见"矿池思路.txt"文件。
  
  支持矿机动态接入矿池。
-一个矿机接入时结果：
+一个矿机接入时结果：（为了显示的简洁，hash值只输出了前4bytes）
 
 ![image](https://user-images.githubusercontent.com/69345371/115651824-8e06dd80-a35e-11eb-9bb3-269b8077fddf.png)
 
