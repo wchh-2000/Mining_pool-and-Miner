@@ -1,0 +1,34 @@
+# Project: miner
+# Makefile created by Dev-C++ 5.5.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o mining.o sha256.o
+LINKOBJ  = main.o mining.o sha256.o
+LIBS     = -L"D:/program_file/Dev-Cpp/MinGW32/lib" -L"D:/program_file/Dev-Cpp/MinGW32/mingw32/lib" -L"D:/program_file/Dev-Cpp/pthreads-w32-2-9-1-release/Pre-built.2/lib" -static-libgcc -lws2_32 -lpthreadGC2
+INCS     = -I"D:/program_file/Dev-Cpp/MinGW32/include" -I"D:/program_file/Dev-Cpp/pthreads-w32-2-9-1-release/Pre-built.2/include"
+CXXINCS  = -I"D:/program_file/Dev-Cpp/MinGW32/include" -I"D:/program_file/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
+BIN      = miner.exe
+CXXFLAGS = $(CXXINCS) -lpthread
+CFLAGS   = $(INCS) -lpthread
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+mining.o: mining.c
+	$(CC) -c mining.c -o mining.o $(CFLAGS)
+
+sha256.o: sha256.c
+	$(CC) -c sha256.c -o sha256.o $(CFLAGS)

@@ -1,0 +1,32 @@
+矿池mining_pool:(server)
+创建connect线程 矿机client接入 服务器与每个矿机建一个communicate线程
+while(没有生成完区块) 
+ if newblock: 
+	block_init: block初始化 转字符串str后接N0(bits 0 in the front of hash)两位字符（全局变量） newblockdone=1
+ if find: 
+	更新block 加入链 newblock=1 newblockdone=0 find=0
+
+每个矿机线程函数communicate：
+循环收发
+if 收到 "find...": 
+	检验，改全局变量find=矿工编号（非零） n1=nonce1 n2=nonce2 sendjob(每个miner独立的，表示已经发过)=0
+   收到 "nextjob":
+	发送nonce1值（8bytes） nonce1++ 
+if find: 
+	（除了编号为find的矿工都会）发送"find",
+if newblockdone & !sendjob & !find: 
+	发送字符串str(内含nonce1,由全局变量控制)后接N0 nonce1++ 
+
+矿机miner:(client)
+接入server  
+循环收发：
+if 收到job 创建挖矿线程
+   收到 "find": 终止挖矿线程
+   收到 len==8:更改nonce1 创建新的挖矿线程
+if find==1: 主函数发送find+nonce1nonce2(16bytes)给server find=0
+if nextjob==1: 发送"nextjob" nextjob=0
+   
+挖矿线程函数Mining：
+  if 挖到: 改变全局变量find=1 结束线程
+  if 遍历了nonce2没挖到: 改全局变量nextjob=1, 结束线程
+  
