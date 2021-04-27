@@ -32,6 +32,7 @@ void* Mining(void *arg)
 	printf("	nonce1=%lld\n",str2long(&str[40]));
 	for(j=0;v==0 && j<MaxNum;j++)
 	{
+		pthread_testcancel();//线程结束点 
 		long2str(j,&str[48]);//直接修改字符数组内nonce2的值
 		v=verify(&ctx,str,hash,a->n0);
 		//if(j%500==0)
